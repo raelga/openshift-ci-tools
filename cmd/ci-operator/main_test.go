@@ -1869,6 +1869,15 @@ func TestAdjustLeaseAcquireTimeout(t *testing.T) {
 			targets:         []string{"e2e-parallel"},
 			expectedTimeout: 2 * time.Hour,
 		},
+		{
+			name:           "no explicit targets with long test timeout adjusts lease timeout",
+			initialTimeout: 2 * time.Hour,
+			tests: []api.TestStepConfiguration{
+				{As: "e2e-parallel", Timeout: dur(10 * time.Hour)},
+			},
+			targets:         nil,
+			expectedTimeout: 10 * time.Hour,
+		},
 	}
 
 	for _, tc := range testCases {

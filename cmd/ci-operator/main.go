@@ -2078,7 +2078,7 @@ func loadLeaseCredentials(leaseServerCredentialsFile string) (string, func() []b
 // though the overall job timeout would allow waiting longer.
 func (o *options) adjustLeaseAcquireTimeout() {
 	for _, test := range o.configSpec.Tests {
-		if !slices.Contains(o.targets.values, test.As) {
+		if len(o.targets.values) > 0 && !slices.Contains(o.targets.values, test.As) {
 			continue
 		}
 		if test.Timeout != nil && test.Timeout.Duration > o.leaseAcquireTimeout {
